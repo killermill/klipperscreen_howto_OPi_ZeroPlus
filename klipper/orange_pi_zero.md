@@ -1,10 +1,10 @@
-# Установка KlipperScreen на Orange Pi Zero с экраном 3.5"
+# Установка KlipperScreen на Orange Pi Zero Plus с экраном 3.5"
 
 ## Используемое железо
 
-Для установки [Klipper](https://github.com/KevinOConnor/klipper) использовалась плата Orange Pi Zero (http://www.orangepi.org/orangepizero/) на процессоре H2+ с 512мб памяти. Операционная система - [Armbian Buster](https://www.armbian.com/orange-pi-zero/) с актуальным ядром 5.10.
+Для установки [Klipper](https://github.com/KevinOConnor/klipper) использовалась плата [Orange Pi Zero Plus](http://www.orangepi.org/html/hardWare/computerAndMicrocontrollers/details/Orange-Pi-Zero-Plus.html) на процессоре H5 с 512мб памяти. Операционная система - [Armbian 23.8 Bookworm](https://www.armbian.com/orange-pi-zero-plus/) с актуальным ядром 6.1.
 
-В качестве экрана использован 3.5" экран для Raspberry Pi,  подключаемый по SPI.
+В качестве экрана использован 3.5" экран для Raspberry Pi MPI3501,  подключаемый по SPI.
 
 ## Подключение экрана
 
@@ -200,7 +200,7 @@ DISPLAY=:0.0 xinput list-props 'ADS7846 Touchscreen' | grep "Coordinate Transfor
 Применить новую матрицу:
 
 ```
-DISPLAY=:0.0 xinput --set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 0 1 0 -1 0 1 0 0 1
+DISPLAY=:0.0 xinput --set-prop 'ADS7846 Touchscreen' 'Coordinate Transformation Matrix' 1 0 0 0 -1 1 0 0 1
 ```
 
 Для того, чтобы сохранить настройки touch-панели нужно создать файл /etc/X11/xorg.conf.d/99-calibration.conf:
@@ -211,8 +211,8 @@ Section "InputClass"
         MatchIsTouchscreen "on"
         MatchDevicePath "/dev/input/event*"
         Driver "libinput"
-        Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
-	Option    "SwapXY"    "1"
-	Option	"InvertX"     "1"
+        Option "TransformationMatrix" "1 0 0 0 -1 1 0 0 1"
+	Option    "SwapXY"    "0"
+	Option	"InvertX"     "0"
 EndSection
 ```
